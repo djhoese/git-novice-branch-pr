@@ -5,7 +5,7 @@ on:
       - gh-pages
       - main
       - slim-hours
-  pull_request: []
+  pull_request: {}
 jobs:
   build-website:
     if: ${{ !endsWith(github.repository, '/styles') }}
