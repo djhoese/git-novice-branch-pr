@@ -16,7 +16,7 @@ keypoints:
 - "Version control is like an unlimited 'undo' and lets many people work in parallel."
 - "`git init` creates a repository; `git add` stages changes; `git commit` records them."
 - "`git status`, `git diff`, and `git log` show you what has changed and when."
-- "`git checkout` restores old versions; `.gitignore` tells Git what to skip."
+- "`git restore` restores old versions; `.gitignore` tells Git what to skip."
 - "Branches let you work without disturbing `main`; `git merge` brings work back together."
 - "Conflicts are marked in the file for you to resolve, then `git add` + `git commit`."
 ---
@@ -54,7 +54,6 @@ use `git verb` commands. Use **your own** name and email:
 ~~~
 $ git config --global user.name "Vlad Dracula"
 $ git config --global user.email "vlad@tran.sylvan.ia"
-$ git config --global color.ui "auto"
 ~~~
 {: .language-bash}
 
@@ -258,10 +257,10 @@ $ nano mars.txt   # overwrite everything with junk
 ~~~
 {: .language-bash}
 
-Restore the last committed version with `git checkout`:
+Restore the last committed version with `git restore`:
 
 ~~~
-$ git checkout HEAD mars.txt
+$ git restore mars.txt
 $ cat mars.txt
 ~~~
 {: .language-bash}
@@ -273,27 +272,11 @@ But the Mummy will appreciate the lack of humidity
 ~~~
 {: .output}
 
-`git checkout HEAD <file>` restores the last committed version; a commit ID in
+`git restore HEAD <file>` restores the last committed version; a commit ID in
 place of `HEAD` restores an even older version. To undo the change we want the
 commit ID *before* the change, not the one that introduced it.
 
 ![Git Checkout](../fig/git-checkout.svg)
-
-> ## (Optional) Recovering older versions
->
-> Jennifer broke `data_cruncher.py` and wants the last committed version back.
-> Which command works?
->
-> 1. `git checkout HEAD`
-> 2. `git checkout HEAD data_cruncher.py`
-> 3. `git checkout HEAD~1 data_cruncher.py`
-> 4. `git checkout <ID of last commit> data_cruncher.py`
-> 5. Both 2 and 4
->
-> > ## Solution
-> > **5** — both 2 and 4 restore the last committed version.
-> {: .solution}
-{: .challenge}
 
 ## 6. Ignoring things
 
@@ -350,7 +333,7 @@ branch, switch to it, do the work, and commit:
 
 ~~~
 $ git branch pythondev
-$ git checkout pythondev
+$ git switch pythondev
 $ touch analysis.py
 $ git add analysis.py
 $ git commit -m "Wrote and tested python analysis script"
@@ -361,7 +344,7 @@ Switching back to `main`, the file is gone — the work is safely isolated on th
 branch:
 
 ~~~
-$ git checkout main
+$ git switch main
 $ ls
 ~~~
 {: .language-bash}
@@ -370,7 +353,7 @@ Once we're happy with the work, **merge** it into `main`. First switch to the
 branch you're merging *into*, then merge:
 
 ~~~
-$ git checkout main
+$ git switch main
 $ git merge pythondev
 ~~~
 {: .language-bash}
@@ -395,30 +378,30 @@ $ git branch -d pythondev
 ## 8. Resolving a conflict
 
 A conflict happens when the same lines change on two branches. Let's make one.
-Create a branch but stay on `main`, and add a line here:
+Create a new branch and switch to it, and add a line here:
 
 ~~~
-$ git branch marsTemp
-$ nano mars.txt   # add: "I'll be able to get 40 extra minutes of beauty rest"
-$ git add mars.txt
-$ git commit -m "Add a line about the daylight on Mars."
-~~~
-{: .language-bash}
-
-Now switch to `marsTemp` and change **the same last line** differently:
-
-~~~
-$ git checkout marsTemp
+$ git switch -c marsTemp
 $ nano mars.txt   # add: "Yeti will appreciate the cold"
 $ git add mars.txt
 $ git commit -m "Add a line about the temperature on Mars"
 ~~~
 {: .language-bash}
 
+Now switch to `main` and change **the same last line** differently:
+
+~~~
+$ git switch main
+$ nano mars.txt   # add: "I'll be able to get 40 extra minutes of beauty rest"
+$ git add mars.txt
+$ git commit -m "Add a line about the daylight on Mars."
+~~~
+{: .language-bash}
+
 Merge `marsTemp` into `main` and Git reports a conflict it can't resolve alone:
 
 ~~~
-$ git checkout main
+$ git switch main
 $ git merge marsTemp
 ~~~
 {: .language-bash}
