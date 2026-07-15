@@ -234,7 +234,7 @@ Create a branch named after the country you'll add (pick a unique one), and
 switch to it in one step:
 
 ~~~
-$ git checkout -b addFrance
+$ git switch -c addFrance
 $ git branch
 ~~~
 {: .language-bash}
@@ -280,7 +280,7 @@ New commits pushed to the same branch join the existing merge request. Use a
 
 > ## (Optional) Add another country and make a second MR
 >
-> - From `main`, make a new branch (`git checkout main` then `git checkout -b addItaly`).
+> - From `main`, make a new branch (`git switch main` then `git switch -c addItaly`).
 > - Copy another country file, edit it, then `add` + `commit`.
 > - Push the branch (`git push origin addItaly`) and open a merge request.
 {: .challenge}
