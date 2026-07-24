@@ -29,6 +29,39 @@ keypoints:
 > in the timing.
 {: .prereq}
 
+## 0. Catch-up (if you missed Session 1)
+
+Didn't make Session 1, or deleted your `planets` folder? Run the block below to
+rebuild a `planets` repository that's equivalent to where Session 1 left off —
+the same tracked files (`mars.txt`, `.gitignore`, and `analysis.py`) on a `main`
+branch with a commit. If you already completed Session 1 and still have your
+`planets` repo, **skip this section**.
+
+~~~
+# One-time Git identity — skip these three if you already configured Git
+$ git config --global user.name "Vlad Dracula"
+$ git config --global user.email "vlad@tran.sylvan.ia"
+$ git config --global init.defaultBranch main
+
+# Recreate the planets repo from Session 1
+$ mkdir planets
+$ cd planets
+$ git init
+
+$ echo -e "Cold and dry, but everything is my favorite color\nThe two moons may be a problem for Wolfman\nBut the Mummy will appreciate the lack of humidity" > mars.txt
+$ echo -e "*.dat\nresults/" > .gitignore
+$ touch analysis.py
+
+$ git add .
+$ git commit -m "Recreate planets repo from Session 1"
+~~~
+{: .language-bash}
+
+Use **your own** name and email in the `git config` lines. The `-e` flag on
+`echo` is what turns the `\n` sequences into real line breaks. That's all
+Session 2 needs — the exact contents and commit history from Session 1 don't
+matter here.
+
 ## 1. SSH key setup
 
 Before your computer can talk to GitLab, it needs to prove it's you. We use
